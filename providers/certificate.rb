@@ -93,7 +93,7 @@ action :create do
       end
     end
 
-    ruby_block "create certificate for #{new_resource.cn}" do
+    ruby_block "create certificate for #{new_resource.cn}" do # ~FC014
       block do
         if (all_validations.map { |authz| authz.status == 'valid' }).all?
           begin

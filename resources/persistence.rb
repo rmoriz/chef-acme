@@ -101,7 +101,7 @@ end
 
 action_class do
   def load_data_bag_item(data_bag_name, _data_bag_item, secret = nil)
-    item = search(data_bag_name, 'id:' + cn).first
+    item = search(data_bag_name.to_sym, "id:#{cn}").first
     item = ::Chef::EncryptedDataBagItem.new(item, secret) if item && secret
     item
   end
