@@ -21,22 +21,48 @@
 actions :create
 default_action :create
 
-attribute :cn,            kind_of: String, name_attribute: true
-attribute :alt_names,     kind_of: Array,  default: []
+attribute :cn,
+            kind_of: String,
+            name_attribute: true
 
-attribute :crt,           kind_of: String, default: nil
-attribute :key,           kind_of: String, default: nil
+attribute :alt_names,
+            kind_of: Array,
+            default: []
 
-attribute :chain,         kind_of: String, default: nil
-attribute :fullchain,     kind_of: String, default: nil
+attribute :crt,
+            kind_of: String,
+            default: nil
 
-attribute :owner,         kind_of: String, default: 'root'
-attribute :group,         kind_of: String, default: 'root'
+attribute :key,
+            kind_of: String,
+            default: nil
 
-attribute :method,        kind_of: String, default: 'http'
-attribute :wwwroot,       kind_of: String, default: '/var/www'
+attribute :chain,
+            kind_of: String,
+            default: nil
 
-attribute :key_size,      kind_of: Integer,
-                          default: node['acme']['key_size'],
-                          equal_to: [2048, 3072, 4096],
-                          required: true
+attribute :fullchain,
+            kind_of: String,
+            default: nil
+
+attribute :owner,
+            kind_of: String,
+            default: 'root'
+
+attribute :group,
+            kind_of: String,
+            default: 'root'
+
+attribute :validation_method,
+            kind_of: String,
+            default: 'http'
+
+attribute :wwwroot,
+            kind_of: String,
+            default: '/var/www'
+
+attribute :key_size,
+            kind_of: Integer,
+            default: node['acme']['key_size'],
+            equal_to: [2048, 3072, 4096],
+            required: true
