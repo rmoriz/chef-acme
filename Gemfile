@@ -20,28 +20,24 @@
 source 'https://rubygems.org'
 
 group :test do
-  gem 'rake', '~> 11.3'
-  gem 'berkshelf', '~> 4.0'
-  gem 'nio4r', '~> 1.2'
-  gem 'solve', '= 2.0.2' # Bug: https://github.com/berkshelf/solve/issues/57
+  gem 'berkshelf', '~> 5.6'
 end
 
 group :style do
-  gem 'foodcritic', '~> 4.0.0'
-  gem 'rubocop', '~> 0.34.0'
+  gem 'foodcritic', '~> 10.4'
+  gem 'cookstyle',  '~> 1.3'
 end
 
 group :integration do
-  gem 'test-kitchen', '~> 1.2'
+  gem 'test-kitchen', '~> 1.16'
 end
 
 group :integration_docker do
-  gem 'kitchen-docker', '~> 2.1'
+  gem 'kitchen-docker', '~> 2.6'
 end
 
 group :integration_vagrant do
-  gem 'vagrant-wrapper', '~> 2.0'
-  gem 'kitchen-vagrant', '~> 0.10'
+  gem 'kitchen-vagrant', '~> 1.1'
 end
 
 group :integration_cloud do
