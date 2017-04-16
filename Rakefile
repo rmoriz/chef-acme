@@ -28,14 +28,31 @@ def ci?
   ENV['CI'] == 'true'
 end
 
+# Style tests. cookstyle (rubocop) and Foodcritic
 namespace :style do
-  require 'rubocop/rake_task'
-  desc 'Run Ruby style checks using rubocop'
-  RuboCop::RakeTask.new(:ruby)
+  begin
+    require 'cookstyle'
+    require 'rubocop/rake_task'
 
-  require 'foodcritic'
-  desc 'Run Chef style checks using foodcritic'
-  FoodCritic::Rake::LintTask.new(:chef)
+    desc 'Run Ruby style checks'
+    RuboCop::RakeTask.new(:ruby)
+  rescue LoadError => e
+    puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
+  end
+
+  begin
+    require 'foodcritic'
+
+    desc 'Run Chef style checks'
+    FoodCritic::Rake::LintTask.new(:chef) do |t|
+      t.options = {
+        fail_tags: ['any'],
+        progress: true,
+      }
+    end
+  rescue LoadError => e
+    puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
+  end
 end
 
 desc 'Run Test Kitchen integration tests'
@@ -86,4 +103,4 @@ task :integration, [:regexp, :action] =>
   ci? ? %w(integration:docker) : %w(integration:vagrant)
 
 desc 'Run style and integration tests'
-task default: %w(style integration)
+task default: %w(style:ruby style:chef integration)

@@ -21,6 +21,7 @@ source 'https://rubygems.org'
 
 group :test do
   gem 'berkshelf', '~> 5.6'
+  gem 'chefspec', '~> 6.2'
 end
 
 group :style do
