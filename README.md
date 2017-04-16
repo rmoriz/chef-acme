@@ -22,8 +22,10 @@ Recipes
 ### default
 Installs the required acme-client rubygem.
 
-Usage
------
+Resources
+---------
+## Usage
+
 Use the `acme_certificate` provider to request a certificate. The webserver for the domain for which you are requesting a certificate must be running on the local server. Currently only the http validation method is supported. Provide the path to your `wwwroot` for the specified domain.
 
 ```ruby
@@ -77,8 +79,8 @@ Providers
 | `owner`          | string  | root     | Owner of the created files                             |
 | `group`          | string  | root     | Group of the created files                             |
 
-Example
--------
+## Example
+
 To generate a certificate for an apache2 website you can use code like this:
 
 ```ruby
@@ -133,6 +135,7 @@ Contributing
 License and Authors
 -------------------
 Authors: Thijs Houtenbos <thoutenbos@schubergphilis.com>
+Authors: Roland Moriz <roland+github@moriz.de>
 
 Credits
 -------
