@@ -22,11 +22,11 @@ use_inline_resources
 
 action :create do
   unless new_resource.crt.nil? ^ new_resource.fullchain.nil?
-    fail "[#{new_resource.cn}] No valid certificate output specified, only one of the crt/fullchain propery is permitted and required"
+    raise "[#{new_resource.cn}] No valid certificate output specified, only one of the crt/fullchain propery is permitted and required"
   end
 
   if new_resource.key.nil?
-    fail "[#{new_resource.cn}] No valid key output specified, the key propery is required"
+    raise "[#{new_resource.cn}] No valid key output specified, the key propery is required"
   end
 
   file "#{new_resource.cn} SSL key" do
@@ -59,7 +59,7 @@ action :create do
         when 'http'
           authz.http01
         else
-          fail "[#{new_resource.cn}] Invalid validation method '#{new_resource.method}'"
+          raise "[#{new_resource.cn}] Invalid validation method '#{new_resource.method}'"
         end
       when 'pending'
         case new_resource.method
@@ -82,13 +82,13 @@ action :create do
           validation = acme_validate_immediately(authz, 'http01', tokenroot, auth_file)
 
           if validation.status != 'valid'
-            fail "[#{new_resource.cn}] Validation failed for domain #{authz.domain}"
+            raise "[#{new_resource.cn}] Validation failed for domain #{authz.domain}"
           end
 
           validation
 
         else
-          fail "[#{new_resource.cn}] Invalid validation method '#{new_resource.method}'"
+          raise "[#{new_resource.cn}] Invalid validation method '#{new_resource.method}'"
         end
       end
     end
@@ -99,7 +99,7 @@ action :create do
           begin
             newcert = acme_cert(new_resource.cn, mykey, new_resource.alt_names)
           rescue Acme::Client::Error => e
-            fail "[#{new_resource.cn}] Certificate request failed: #{e.message}"
+            raise "[#{new_resource.cn}] Certificate request failed: #{e.message}"
           else
             Chef::Resource::File.new("#{new_resource.cn} SSL new crt", run_context).tap do |f|
               f.path    new_resource.crt || new_resource.fullchain
@@ -119,7 +119,7 @@ action :create do
             end.run_action :create
           end
         else
-          fail "[#{new_resource.cn}] Validation failed, unable to request certificate"
+          raise "[#{new_resource.cn}] Validation failed, unable to request certificate"
         end
       end
     end

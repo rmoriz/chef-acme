@@ -46,7 +46,7 @@ action :save do
     'id'         => cn,
     'alt_names'  => alt_names,
     'created_by' => node['fqdn'],
-    'created_at' => Time.now
+    'created_at' => Time.now,
   }
 
   # 'key', 'cert', 'chain' are also used in the data bag format used by
@@ -96,7 +96,7 @@ action :load do
 
   render_to_files(item) if !existing_cert ||
                            self_signed?(existing_cert) ||
-                           item_newer?(item, existing_cert
+                           item_newer?(item, existing_cert)
 end
 
 action_class do

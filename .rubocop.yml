@@ -1,34 +1,14 @@
-AllCops:
-  Include:
-    - Berksfile
-    - '**/Gemfile'
-    - Rakefile
-    - Thorfile
-    - Guardfile
+# Legacy Issues
+Metrics/BlockNesting:
   Exclude:
-    - vendor/**
+  - 'providers/certificate.rb'
 
-ClassLength:
-  Enabled: false
-Documentation:
-  Enabled: false
-Encoding:
-  Enabled: false
-HashSyntax:
-  Enabled: false
-LineLength:
-  Enabled: false
-MethodLength:
-  Enabled: false
-SignalException:
-  Enabled: false
-TrailingCommaInLiteral:
-  Enabled: false
-WordArray:
-  Enabled: false
-ClassAndModuleChildren:
-  Enabled: false
-AbcSize:
-  Enabled: false
-SpaceBeforeFirstArg:
-  Enabled: false
+Style/GuardClause:
+  Exclude:
+  - 'providers/certificate.rb'
+
+# remove/change once https://github.com/chef/cookstyle/issues/28
+# is resolved:
+Style/DoubleNegation:
+  Exclude:
+  - 'resources/persistence.rb'
