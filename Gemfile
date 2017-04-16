@@ -19,6 +19,8 @@
 
 source 'https://rubygems.org'
 
+gem 'acme-client', '= 0.4.0'
+
 group :test do
   gem 'berkshelf', '~> 5.6'
   gem 'chefspec', '~> 6.2'

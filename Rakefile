@@ -55,6 +55,19 @@ namespace :style do
   end
 end
 
+desc 'Run all style checks'
+task style: ['style:chef', 'style:ruby']
+
+# ChefSpec
+begin
+  require 'rspec/core/rake_task'
+
+  desc 'Run ChefSpec examples'
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError => e
+  puts ">>> Gem load error: #{e}, omitting spec" unless ENV['CI']
+end
+
 desc 'Run Test Kitchen integration tests'
 namespace :integration do
   # Gets a collection of instances.
@@ -103,4 +116,4 @@ task :integration, [:regexp, :action] =>
   ci? ? %w(integration:docker) : %w(integration:vagrant)
 
 desc 'Run style and integration tests'
-task default: %w(style:ruby style:chef integration)
+task default: %w(style spec integration)
