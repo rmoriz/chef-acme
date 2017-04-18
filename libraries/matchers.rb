@@ -24,7 +24,7 @@
 if defined?(ChefSpec)
   ChefSpec.define_matcher(:acme_certificate)
   ChefSpec.define_matcher(:acme_selfsigned)
-  ChefSpec.define_matcher(:acme_persistance)
+  ChefSpec.define_matcher(:acme_persistence)
 
   def create_acme_selfsigned(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:acme_selfsigned, :create, resource_name)
@@ -34,11 +34,11 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:acme_certificate, :create, resource_name)
   end
 
-  def save_acme_persistance(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:acme_persistance, :save, resource_name)
+  def save_acme_persistence(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:acme_persistence, :save, resource_name)
   end
 
-  def load_acme_persistance(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:acme_persistance, :load, resource_name)
+  def load_acme_persistence(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:acme_persistence, :load, resource_name)
   end
 end
