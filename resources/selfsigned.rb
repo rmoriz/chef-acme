@@ -18,20 +18,66 @@
 # limitations under the License.
 #
 
-actions :create
+resource_name :acme_selfsigned
 default_action :create
 
-attribute :cn,            kind_of: String, name_attribute: true
+property :cn,
+            kind_of: String,
+            name_property: true
 
-attribute :crt,           kind_of: String, default: nil,   required: true
-attribute :key,           kind_of: String, default: nil,   required: true
+property :crt,
+            kind_of: String,
+            required: true
 
-attribute :chain,         kind_of: String, default: nil
+property :key,
+            kind_of: String,
+            required: true
 
-attribute :owner,         kind_of: String, default: 'root'
-attribute :group,         kind_of: String, default: 'root'
+property :chain,
+            kind_of: [String, nil]
 
-attribute :key_size,      kind_of: Integer,
-                          default: node['acme']['key_size'],
-                          equal_to: [2048, 3072, 4096],
-                          required: true
+property :owner,
+            kind_of: String,
+            default: 'root'
+
+property :group,
+            kind_of: String,
+            default: 'root'
+
+property :key_size,
+            kind_of: Integer,
+            default: node['acme']['key_size'],
+            equal_to: [2048, 3072, 4096],
+            required: true
+
+action :create do
+  file "#{new_resource.cn} SSL selfsigned key" do
+    path      new_resource.key
+    owner     new_resource.owner
+    group     new_resource.group
+    mode      00400
+    content   OpenSSL::PKey::RSA.new(new_resource.key_size).to_pem
+    sensitive true
+    action    :create_if_missing
+  end
+
+  file "#{new_resource.cn} SSL selfsigned crt" do
+    path    new_resource.crt
+    owner   new_resource.owner
+    group   new_resource.group
+    mode    00644
+    content lazy { self_signed_cert(new_resource.cn, OpenSSL::PKey::RSA.new(::File.read(new_resource.key))).to_pem }
+    action  :create_if_missing
+  end
+
+  return unless new_resource.chain
+
+  file "#{new_resource.cn} SSL selfsigned chain" do
+    path    new_resource.chain
+    owner   new_resource.owner
+    group   new_resource.group
+    mode    00644
+    content lazy { self_signed_cert(new_resource.cn, OpenSSL::PKey::RSA.new(::File.read(new_resource.key))).to_pem }
+    action  :create_if_missing
+  end
+end

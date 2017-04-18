@@ -26,7 +26,7 @@ acme_selfsigned 'test.example.com' do
   key     '/etc/ssl/test.example.com.key'
 end
 
-include_recipe 'acme_client::nginx'
+include_recipe 'acme_client::_nginx'
 
 # Request the real certificate
 acme_certificate 'test.example.com' do

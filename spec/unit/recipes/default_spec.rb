@@ -5,7 +5,7 @@
 require 'spec_helper'
 
 describe 'acme::default' do
-  context 'When all attributes are default, on an unspecified platform' do
+  context 'When all attributes are default' do
     cached(:chef_run) do
       runner = ChefSpec::ServerRunner.new
       runner.converge(described_recipe)

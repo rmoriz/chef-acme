@@ -21,9 +21,16 @@ source 'https://rubygems.org'
 
 gem 'acme-client', '= 0.4.0'
 
+# rmoriz, 2017-04-17
+# chefspec is currently broken with chef13. as chefspec is part of chefdk we
+# currently cannot test on chef13. pin chef12 instead.
+# see: https://github.com/sethvargo/chefspec/issues/827
+#
+gem 'chef', '12.18.31'
+
 group :test do
   gem 'berkshelf', '~> 5.6'
-  gem 'chefspec', '~> 6.2'
+  gem 'chefspec', '~> 5.3'
 end
 
 group :style do
