@@ -29,6 +29,7 @@ gem 'acme-client', '= 0.4.0'
 gem 'chef', '12.18.31'
 
 group :test do
+  gem 'rake', '~> 12.0'
   gem 'berkshelf', '~> 5.6'
   gem 'chefspec', '~> 5.3'
 end
